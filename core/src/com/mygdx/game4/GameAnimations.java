@@ -27,7 +27,7 @@ public class GameAnimations extends GameItem {
     public GameAnimations(float xPosition, float yPosition) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-        walkSheet = new Texture(Gdx.files.internal("SlimeAni3.png"));
+        walkSheet = new Texture(Gdx.files.internal("SlimeAni.png"));
 
         TextureRegion[][] tmp = TextureRegion.split(walkSheet, walkSheet.getWidth() / FRAME_COLS, walkSheet.getHeight() / FRAME_ROWS);
 
