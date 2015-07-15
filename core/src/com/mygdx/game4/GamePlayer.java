@@ -44,21 +44,22 @@ public class GamePlayer extends GameItem {
     public void update(List<GameItem> gameItems) {
         //Sjekker hopping, y-verdi settes her:
         if (isJumping && angle < Math.PI) {
-
             this.y = groundLevel + angle;
-
-                    //(int)((270f) * Math.sin(angle));
-
-            angle += (8)*(Math.PI/180f);
-
+            angle -=0.1f;
             onPlatform = false;
-        } else {
+
+            if(this.y <= groundLevel){
+                this.y = groundLevel;
+                angle = 10.0f
+            }
+            
+        }else {
             this.y = groundLevel;
             angle = 0;
             isJumping = false;
         }
 
-        //Dersom spiller på platform, flytt innafor denne:
+        //Dersom spiller pÃ¥ platform, flytt innafor denne:
         if (this.onPlatform) {
             if (this.on(currentPlatform)) {
                 this.move(currentPlatform);  //Justerer enten groundLevel eller this.x
@@ -68,16 +69,16 @@ public class GamePlayer extends GameItem {
             }
         }
 
-        //Dersom ikke på platform, sjekk alle platformer:
+        //Dersom ikke pÃ¥ platform, sjekk alle platformer:
         if (this.onPlatform == false) {
             //Utenfor, faller evt. ned:
             if(groundLevel >= MainGameClass.GROUND_LEVEL){
                 groundLevel -= 8;
             }
-            //Sjekker seg selv mot alle plattformer. Dersom på en platform sjekkes ikke resten...
+            //Sjekker seg selv mot alle plattformer. Dersom pÃ¥ en platform sjekkes ikke resten...
             for (int i = 0; i < gameItems.size(); i++) {
                 GamePlatform pf = (GamePlatform) gameItems.get(i);
-                //På platformen:
+                //PÃ¥ platformen:
                 if (this.on(pf)) {
                     this.onPlatform = true;
                     this.currentPlatform = pf;
@@ -96,7 +97,7 @@ public class GamePlayer extends GameItem {
                 this.x -= pf.getSpeed();
         }else {
             if (pf.isMoveUp())
-                groundLevel+= pf.getSpeed();    //NB! justerer på groundLevel!!
+                groundLevel+= pf.getSpeed();    //NB! justerer pÃ¥ groundLevel!!
             else
                 groundLevel-= pf.getSpeed();
         }
